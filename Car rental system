@@ -1,0 +1,194 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Car {
+    private String licensePlateNumber;
+    private String make;
+    private String model;
+    private int year;
+    private double rentalPrice;
+    private boolean available;
+
+    public Car(String licensePlateNumber, String make, String model, int year, double rentalPrice) {
+        this.licensePlateNumber = licensePlateNumber;
+        this.make = make;
+        this.model = model;
+        this.year = year;
+        this.rentalPrice = rentalPrice;
+        this.available = true;
+    }
+
+    public String getLicensePlateNumber() {
+        return licensePlateNumber;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
+
+    @Override
+    public String toString() {
+        return "Car{" +
+                "licensePlateNumber='" + licensePlateNumber + '\'' +
+                ", make='" + make + '\'' +
+                ", model='" + model + '\'' +
+                ", year=" + year +
+                ", rentalPrice=" + rentalPrice +
+                ", available=" + available +
+                '}';
+    }
+
+    public static class CarRental {
+        private static ArrayList<Car> cars = new ArrayList<>();
+
+        public static void main(String[] args) {
+            Scanner scanner = new Scanner(System.in);
+
+            while (true) {
+                System.out.println("Welcome to the car rental system!");
+                System.out.println("Please select an option:");
+                System.out.println("1. Add a car");
+                System.out.println("2. Remove a car");
+                System.out.println("3. View all cars");
+                System.out.println("4. Rent a car");
+                System.out.println("5. Return a car");
+                System.out.println("6. Exit");
+
+                int choice = scanner.nextInt();
+
+                switch (choice) {
+                    case 1:
+                        addCar();
+                        break;
+                    case 2:
+                        removeCar();
+                        break;
+                    case 3:
+                        viewAllCars();
+                        break;
+                    case 4:
+                        rentCar();
+                        break;
+                    case 5:
+                        returnCar();
+                        break;
+                    case 6:
+                        System.out.println("Thank you for using the car rental system!");
+                        System.exit(0);
+                    default:
+                        System.out.println("Invalid option. Please try again.");
+                }
+            }
+        }
+
+        private static void addCar() {
+            Scanner scanner = new Scanner(System.in);
+
+            System.out.print("Enter the car make: ");
+            String make = scanner.nextLine();
+
+            System.out.print("Enter the car model: ");
+            String model = scanner.nextLine();
+
+            System.out.print("Enter the car year: ");
+            int year = scanner.nextInt();
+
+            System.out.print("Enter the car rental price: ");
+            double rentalPrice = scanner.nextDouble();
+
+            System.out.print("Enter the license plate number: ");
+            scanner.nextLine(); // consume the newline
+            String licensePlateNumber = scanner.nextLine();
+
+            cars.add(new Car(licensePlateNumber, make, model, year, rentalPrice));
+
+            System.out.println("Car added successfully!");
+        }
+
+        private static void removeCar() {
+            Scanner scanner = new Scanner(System.in);
+
+            System.out.print("Enter the license plate number: ");
+            String licensePlateNumber = scanner.nextLine();
+
+            Car carToRemove = null;
+
+            for (Car car : cars) {
+                if (car.getLicensePlateNumber().equals(licensePlateNumber)) {
+                    carToRemove = car;
+                    break;
+                }
+            }
+
+            if (carToRemove != null) {
+                cars.remove(carToRemove);
+
+                System.out.println("Car removed successfully!");
+            } else {
+                System.out.println("Car not found.");
+            }
+        }
+
+        private static void viewAllCars() {
+            if (cars.isEmpty()) {
+                System.out.println("There are no cars in the rental system.");
+            } else {
+                for (Car car : cars) {
+                    System.out.println(car);
+                }
+            }
+        }
+
+        private static void rentCar() {
+            Scanner scanner = new Scanner(System.in);
+
+            System.out.print("Enter the license plate number: ");
+            String licensePlateNumber = scanner.nextLine();
+
+            Car carToRent = null;
+
+            for (Car car : cars) {
+                if (car.getLicensePlateNumber().equals(licensePlateNumber) && car.isAvailable()) {
+                    carToRent = car;
+                    break;
+                }
+            }
+
+            if (carToRent != null) {
+                carToRent.setAvailable(false);
+
+                System.out.println("Car rented successfully!");
+            } else {
+                System.out.println("Car not found or not available.");
+            }
+        }
+
+        private static void returnCar() {
+            Scanner scanner = new Scanner(System.in);
+
+            System.out.print("Enter the license plate number: ");
+            String licensePlateNumber = scanner.nextLine();
+
+            Car carToReturn = null;
+
+            for (Car car : cars) {
+                if (car.getLicensePlateNumber().equals(licensePlateNumber) && !car.isAvailable()) {
+                    carToReturn = car;
+                    break;
+                }
+            }
+
+            if (carToReturn != null) {
+                carToReturn.setAvailable(true);
+
+                System.out.println("Car returned successfully!");
+            } else {
+                System.out.println("Car not found or already available.");
+            }
+        }
+    }
+}
