@@ -1,0 +1,79 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+class Book {
+    private String title;
+    private String author;
+    private int year;
+
+    public Book(String title, String author, int year) {
+        this.title = title;
+        this.author = author;
+        this.year = year;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    @Override
+    public String toString() {
+        return "Title: " + title + ", Author: " + author + ", Year: " + year;
+    }
+}
+
+class Library {
+    private Map<Integer, Book> books;
+    private int bookIdCounter;
+
+    public Library() {
+        books = new HashMap<>();
+        bookIdCounter = 1; // Initialize book ID counter
+    }
+
+    public void addBook(String title, String author, int year) {
+        Book newBook = new Book(title, author, year);
+        books.put(bookIdCounter, newBook);
+        bookIdCounter++;
+    }
+
+    public void displayBooks() {
+        for (Map.Entry<Integer, Book> entry : books.entrySet()) {
+            System.out.println("Book ID: " + entry.getKey() + ", " + entry.getValue());
+        }
+    }
+
+    public Book borrowBook(int bookId) {
+        return books.get(bookId);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Library library = new Library();
+        library.addBook("Java Programming", "John Doe", 2020);
+        library.addBook("Python Basics", "Jane Smith", 2018);
+
+        System.out.println("Books available in the library:");
+        library.displayBooks();
+
+        // Borrow a book by ID
+        int bookIdToBorrow = 1; // Change this ID to borrow different books
+        Book borrowedBook = library.borrowBook(bookIdToBorrow);
+        if (borrowedBook != null) {
+            System.out.println("You've borrowed: " + borrowedBook);
+        } else {
+            System.out.println("Book not found or already borrowed.");
+        }
+    }
+}
