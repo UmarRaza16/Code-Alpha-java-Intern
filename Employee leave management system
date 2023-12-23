@@ -1,0 +1,47 @@
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+class Employee {
+    private String name;
+    private int leaveBalance;
+
+    public Employee(String name, int leaveBalance) {
+        this.name = name;
+        this.leaveBalance = leaveBalance;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getLeaveBalance() {
+        return leaveBalance;
+    }
+
+    public void setLeaveBalance(int leaveBalance) {
+        this.leaveBalance = leaveBalance;
+    }
+}
+
+public class LeaveManagementSystem {
+    private static List<Employee> employees = new ArrayList<>();
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Welcome to the Employee Leave Management System!");
+
+        // Add employees to the system
+        employees.add(new Employee("John", 10));
+        employees.add(new Employee("Sarah", 15));
+        // Add more employees if needed
+
+        // Ask for user input and perform leave management logic here
+
+        System.out.println("Thank you for using the Employee Leave Management System. Have a great day!");
+
+        scanner.close();
+    }
+}
