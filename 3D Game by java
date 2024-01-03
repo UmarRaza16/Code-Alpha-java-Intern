@@ -1,0 +1,66 @@
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+public class Game extends JFrame implements KeyListener {
+    private boolean upPressed;
+    private boolean downPressed;
+    private boolean leftPressed;
+    private boolean rightPressed;
+
+    public Game() {
+        setTitle("3D Game");
+        setSize(800, 600);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
+        setLocationRelativeTo(null);
+        addKeyListener(this);
+        setFocusable(true);
+        setFocusTraversalKeysEnabled(false);
+        setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        new Game();
+    }
+
+    @Override
+    public void paint(Graphics g) {
+        super.paint(g);
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setColor(Color.RED);
+        g2d.fillRect(400, 300, 50, 50);
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_UP) {
+            upPressed = true;
+        } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+            downPressed = true;
+        } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+            leftPressed = true;
+        } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            rightPressed = true;
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_UP) {
+            upPressed = false;
+        } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+            downPressed = false;
+        } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+            leftPressed = false;
+        } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            rightPressed = false;
+        }
+    }
+}
